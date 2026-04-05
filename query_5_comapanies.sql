@@ -1,6 +1,6 @@
 -- ============================================
 -- QUERY 5: ROLLING 3-MONTH LAYOFF TREND
--- Author: [Your Name]
+-- Author: [Ahmad Umer]
 -- Dataset: Global Tech Layoffs 2020-2026
 -- ============================================
 
