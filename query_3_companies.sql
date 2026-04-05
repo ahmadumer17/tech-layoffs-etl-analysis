@@ -1,6 +1,6 @@
 -- ============================================
 -- QUERY 3: TOTAL LAYOFFS BY INDUSTRY
--- Author: [Your Name]
+-- Author: [Ahmad Umer]
 -- Dataset: Global Tech Layoffs 2020-2026
 -- ============================================
 
