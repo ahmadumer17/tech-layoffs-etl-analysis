@@ -1,6 +1,6 @@
 -- ============================================
 -- Query 1: Top 20 Companies by Total Layoffs
--- Author: [Your Name]
+-- Author: [Ahmad Umer]
 -- Dataset: Global Tech Layoffs 2020-2026
 -- ============================================
 
