@@ -1,6 +1,6 @@
 -- ============================================
 -- QUERY 2: TOTAL LAYOFFS BY COUNTRY
--- Author: [Your Name]
+-- Author: [Ahmad Umer]
 -- Dataset: Global Tech Layoffs 2020-2026
 -- ============================================
 
