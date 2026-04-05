@@ -1,6 +1,8 @@
-# ============================================
-# QUERY 2: TOTAL LAYOFFS BY COUNTRY
-# ============================================
+-- ============================================
+-- QUERY 2: TOTAL LAYOFFS BY COUNTRY
+-- Author: [Your Name]
+-- Dataset: Global Tech Layoffs 2020-2026
+-- ============================================
 
 query_2 = """
 SELECT
