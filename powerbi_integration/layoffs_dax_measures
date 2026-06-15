@@ -1,0 +1,138 @@
+// =============================================================================
+// DAX Measures — Tech Layoffs ETL Analysis
+// Power BI Report  |  Ahmad Umer
+// =============================================================================
+// Paste each measure into Power BI Desktop:
+//   Modeling tab → New Measure
+// Add each measure to the table indicated in the section header.
+// =============================================================================
+
+
+// -----------------------------------------------------------------------------
+// TABLE: pbi_fact_layoffs  (add all summary measures here)
+// -----------------------------------------------------------------------------
+
+Total Layoffs =
+SUM( pbi_fact_layoffs[total_laid_off] )
+
+Total Events =
+COUNTROWS( pbi_fact_layoffs )
+
+Total Companies =
+DISTINCTCOUNT( pbi_fact_layoffs[company] )
+
+Total Countries =
+DISTINCTCOUNT( pbi_fact_layoffs[country] )
+
+Avg Layoffs Per Event =
+DIVIDE( [Total Layoffs], [Total Events], 0 )
+
+Avg Pct Laid Off =
+AVERAGE( pbi_fact_layoffs[percentage_laid_off] )
+
+Peak Year Layoffs =
+CALCULATE(
+    [Total Layoffs],
+    pbi_fact_layoffs[year] = 2023
+)
+
+AI Industry Layoffs =
+CALCULATE(
+    [Total Layoffs],
+    pbi_fact_layoffs[industry] = "AI"
+)
+
+US Layoffs =
+CALCULATE(
+    [Total Layoffs],
+    pbi_fact_layoffs[country] = "United States"
+)
+
+US Share of Global =
+DIVIDE( [US Layoffs], [Total Layoffs], 0 )
+
+US Share Label =
+FORMAT( [US Share of Global], "0.0%" ) & " of global layoffs"
+
+
+// -----------------------------------------------------------------------------
+// TABLE: pbi_company_rankings
+// -----------------------------------------------------------------------------
+
+Top Company Layoffs =
+CALCULATE(
+    MAX( pbi_company_rankings[total_laid_off] ),
+    pbi_company_rankings[rank] = 1
+)
+
+Top Company Name =
+CALCULATE(
+    MAX( pbi_company_rankings[company] ),
+    pbi_company_rankings[rank] = 1
+)
+
+
+// -----------------------------------------------------------------------------
+// TABLE: pbi_yearly_trend
+// -----------------------------------------------------------------------------
+
+Peak Year Total =
+CALCULATE(
+    MAX( pbi_yearly_trend[total_laid_off] ),
+    pbi_yearly_trend[year] = 2023
+)
+
+YoY Change Label =
+VAR yr = MAX( pbi_yearly_trend[year] )
+VAR chg = CALCULATE( MAX( pbi_yearly_trend[yoy_pct_change] ), pbi_yearly_trend[year] = yr )
+RETURN
+    IF(
+        chg > 0,
+        "+" & FORMAT( chg, "0.0" ) & "% vs prior year",
+        FORMAT( chg, "0.0" ) & "% vs prior year"
+    )
+
+
+// -----------------------------------------------------------------------------
+// TABLE: pbi_rolling_trend
+// -----------------------------------------------------------------------------
+
+Rolling 3M Peak =
+CALCULATE(
+    MAX( pbi_rolling_trend[rolling_3m] ),
+    pbi_rolling_trend[rolling_3m_peak] = TRUE()
+)
+
+Rolling 3M Peak Label =
+FORMAT( [Rolling 3M Peak], "#,##0" ) & " layoffs — Jan 2023 peak"
+
+
+// -----------------------------------------------------------------------------
+// TABLE: pbi_industry_summary
+// -----------------------------------------------------------------------------
+
+Hardware Avg Per Event =
+CALCULATE(
+    MAX( pbi_industry_summary[avg_per_event] ),
+    pbi_industry_summary[industry] = "Hardware"
+)
+
+AI Total Layoffs =
+CALCULATE(
+    MAX( pbi_industry_summary[total_laid_off] ),
+    pbi_industry_summary[industry] = "AI"
+)
+
+Hardware vs AI Ratio =
+DIVIDE( [Hardware Avg Per Event], [AI Total Layoffs], 0 )
+
+
+// -----------------------------------------------------------------------------
+// FORMATTING helpers
+// -----------------------------------------------------------------------------
+
+Total Layoffs (K) =
+FORMAT( [Total Layoffs] / 1000, "0.0" ) & "K"
+
+Total Layoffs Formatted =
+FORMAT( [Total Layoffs], "#,##0" )
